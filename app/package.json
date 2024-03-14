@@ -1,0 +1,33 @@
+{
+  "name": "record-scrape",
+  "version": "1.0.0",
+  "description": "Configurable scraper utility",
+  "main": "dist-app/main.js",
+  "scripts": {
+    "tsc": "tsc",
+    "start": "tsc && electron .",
+    "build-w": "tsc && electron-builder build -w --publish never"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/record10/record-scrape.git"
+  },
+  "keywords": [],
+  "author": "Pritam Rajput",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/record10/record-scrape/issues"
+  },
+  "homepage": "https://github.com/record10/record-scrape#readme",
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "electron": "^29.1.4",
+    "electron-is-dev": "^3.0.1"
+  },
+  "dependencies": {
+    "electron-log": "^5.1.2",
+    "electron-updater": "^6.1.8",
+    "sqlite3": "^5.1.7",
+    "typeorm": "^0.3.20"
+  }
+}
