@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { IpcRenderer } from 'electron';
 import { FormsModule } from '@angular/forms';
+import { TabService } from './services/tab-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -22,27 +23,20 @@ export class AppComponent {
   activeTabUUID! : string ;
   ipc!: IpcRenderer;
 
-  constructor() {
-    this.ipc = (<any>window).require('electron').ipcRenderer;
-    this.tabs = JSON.parse(localStorage.getItem('tabs') || '[]');
+  constructor(private tabService: TabService) {
+    this.tabService.tabs$.subscribe(tabs => {
+      this.tabs = tabs;
+    });
     this.addNewTab();
   }
 
   async addNewTab() {
-    let uuid = crypto.randomUUID()
-    this.tabs.push({ name: 'New Tab',  uuid: uuid, searchQuery : "" , url: 'https://www.google.com'});
-    localStorage.setItem('tabs', JSON.stringify(this.tabs));
-    this.activeTabUUID = uuid;
-    this.activeTabHistory.push(uuid);
+    this.activeTabUUID = this.tabService.addNewTab();
+    this.activeTabHistory.push(this.activeTabUUID);
   }
 
   closeTab(uuid: string) {
-    // this.ipc.invoke('close-window', this.tabs[index].webContentsId);
-    let index = this.tabs.findIndex(tab => tab.uuid === uuid);
-    this.tabs.splice(index, 1);
-    localStorage.setItem('tabs', JSON.stringify(this.tabs));
-    this.activeTabHistory.splice(this.activeTabHistory.indexOf(uuid), 1);
-    this.activeTabUUID = this.activeTabHistory[this.activeTabHistory.length - 1];
+    this.tabService.closeTab(uuid);
   }
 
   setActiveTab(uuid: string) {
