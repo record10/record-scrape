@@ -24,6 +24,7 @@ export class AppComponent {
 
   constructor() {
     this.ipc = (<any>window).require('electron').ipcRenderer;
+    this.tabs = JSON.parse(localStorage.getItem('tabs') || '[]');
     this.addNewTab();
   }
 
@@ -39,6 +40,7 @@ export class AppComponent {
     // this.ipc.invoke('close-window', this.tabs[index].webContentsId);
     let index = this.tabs.findIndex(tab => tab.uuid === uuid);
     this.tabs.splice(index, 1);
+    localStorage.setItem('tabs', JSON.stringify(this.tabs));
     this.activeTabHistory.splice(this.activeTabHistory.indexOf(uuid), 1);
     this.activeTabUUID = this.activeTabHistory[this.activeTabHistory.length - 1];
   }
