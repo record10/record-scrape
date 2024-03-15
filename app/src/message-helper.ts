@@ -6,27 +6,27 @@ export class MessageHelper {
 
     public static async onMessage(event:any, arg:any) {
         try {
-            let res = await this[arg.message](arg.data);
+            let res = await (<any>this)[arg.message](arg.data);
             event.reply('sync-reply', { message: arg.message, data: res })
         } catch (error) {
             event.reply('sync-reply', { message: arg.message, data: error })
         }
     }
 
-    static async getVersion(data) {
+    static async getVersion(data:any) {
         return app.getVersion();
     }
 
-    static async getLogs(data){
+    static async getLogs(data:any){
         return log.transports.file.readAllLogs().reverse();
     }
     
-    static async installUpdate(data){
+    static async installUpdate(data:any){
         autoUpdater.quitAndInstall();
         return true;
     }
 
-    static async checkForUpdates(data){
+    static async checkForUpdates(data:any){
         return autoUpdater.checkForUpdates();
     }
 

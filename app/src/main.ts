@@ -7,6 +7,7 @@ import * as url from 'url';
 import { MessageHelper } from './message-helper';
 
 let win: BrowserWindow;
+let windows = {};
 
 async function createWindow() {
     win = new BrowserWindow({
@@ -15,11 +16,11 @@ async function createWindow() {
             contextIsolation: false,
             webviewTag: true,
             devTools: true,
-        }  
+        }
     });
 
     let indexUrl = url.format({
-        pathname: path.join(__dirname.replace('dist-app', ''),`dist-web`, `index.html`),
+        pathname: path.join(__dirname.replace('dist-app', ''), `dist-web`, `index.html`),
         protocol: 'file:',
         slashes: true,
     });
@@ -40,6 +41,20 @@ async function createWindow() {
         win = null;
     })
 }
+
+ipcMain.handle('create-window', (event, tabId) => {
+    let win = new BrowserWindow({ /* your options */ });
+    win.loadURL("https://www.google.com/");
+    windows[tabId] = win;
+    return win.webContents.id;
+});
+
+ipcMain.handle('close-window', (event, tabId) => {
+    if (windows[tabId]) {
+        windows[tabId].close();
+        delete windows[tabId];
+    }
+});
 
 app.on('ready', createWindow)
 
