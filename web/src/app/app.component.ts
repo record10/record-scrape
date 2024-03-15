@@ -30,6 +30,7 @@ export class AppComponent {
   async addNewTab() {
     let uuid = crypto.randomUUID()
     this.tabs.push({ name: 'New Tab',  uuid: uuid, searchQuery : "" , url: 'https://www.google.com'});
+    localStorage.setItem('tabs', JSON.stringify(this.tabs));
     this.activeTabUUID = uuid;
     this.activeTabHistory.push(uuid);
   }
@@ -111,8 +112,20 @@ export function script(){
     }
     return nodes;
   };
-  let result = {
-    title : scrape('//title')[0].textContent,
-  };
+
+  let result = {};
+
+  const getInnerHtml = (xpath:string) => {
+    // $x()[0] equivalent code
+    let node = document.evaluate(xpath, document, null, 9, null);
+    return (node?.singleNodeValue as Element)?.innerHTML;
+  }
+
+  //  if we are on linkedin profile page
+  if(window.location.href.includes("linkedin.com/in/")){
+    result = {
+      name: getInnerHtml('//*[@id="ember40"]/h1'),
+    }
+  }
   return result;
 }
