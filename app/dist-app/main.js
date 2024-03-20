@@ -50,7 +50,7 @@ function createWindow() {
         var indexUrl;
         return __generator(this, function (_a) {
             win = new electron_1.BrowserWindow({
-                width: 1920, height: 1080, webPreferences: {
+                width: 1920, height: 1080, frame: false, webPreferences: {
                     nodeIntegration: true,
                     contextIsolation: false,
                     webviewTag: true,

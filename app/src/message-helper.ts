@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import { app, nativeTheme } from 'electron';
 import * as log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 
@@ -28,6 +28,10 @@ export class MessageHelper {
 
     static async checkForUpdates(data:any){
         return autoUpdater.checkForUpdates();
+    }
+
+    static async isNightMode(data:any){
+        return nativeTheme.shouldUseDarkColors;
     }
 
 }

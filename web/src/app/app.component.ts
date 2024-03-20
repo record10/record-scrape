@@ -1,8 +1,8 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChildren } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { IpcRenderer } from 'electron';
-import { FormsModule } from '@angular/forms';
 import { TabService } from './services/tab-manager.service';
 
 @Component({
@@ -26,6 +26,10 @@ export class AppComponent {
   constructor(private tabService: TabService) {
     this.tabService.tabs$.subscribe(tabs => {
       this.tabs = tabs;
+    });
+
+    this.tabService.activeTabHistory$.subscribe(history => {
+      this.activeTabHistory = history;
     });
     this.addNewTab();
   }

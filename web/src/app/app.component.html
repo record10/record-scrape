@@ -1,39 +1,43 @@
-<ul class="nav nav-tabs">
-
-  <li *ngFor="let tab of tabs" class="nav-item" (click)="setActiveTab(tab.uuid)" >
-    <span class="nav-link" [ngClass]="{'active':tab.uuid == activeTabUUID}" aria-current="page">{{tab.name}}
-      <span class="ms-2" (click)="closeTab(tab.uuid)">
-      <i class="fas fa-times"></i>
+<div class="d-flex">
+  <span class="col-1">TT</span>
+  <ul class="nav nav-tabs mt-1 col">
+    <li *ngFor="let tab of tabs" class="nav-item" (click)="setActiveTab(tab.uuid)" >
+      <span class="nav-link clickable" [ngClass]="{'active':tab.uuid == activeTabUUID}" aria-current="page">
+        {{tab.name}}
+         <!-- - {{tab.uuid}}, {{activeTabUUID}} -->
+        <span class="ms-2" (click)="closeTab(tab.uuid)">
+        <i class="fas fa-times"></i>
+        </span>
       </span>
-    </span>
-    
-  </li>
-  <li (click)="addNewTab()">
-    <a class="nav-link" aria-current="page">+</a>
-  </li>
-</ul>
+      
+    </li>
+    <li (click)="addNewTab()">
+      <a class="nav-link" aria-current="page">+</a>
+    </li>
+  </ul>
+</div>
 
 
 <div *ngFor="let tab of tabs" class="nav-item">
     <span class="row" [hidden]="tab.uuid != activeTabUUID">
-      <span class="col-md-1">
-        <button class="btn btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="goBack(tab.uuid)"><i class="fas fa-arrow-left"></i></button>
-        <button class="btn btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="goForward(tab.uuid)"><i class="fas fa-arrow-right"></i></button>
-        <button class="btn btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="reload(tab.uuid)"><i class="fas fa-sync-alt"></i></button>
+      <span class="col-1">
+        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="goBack(tab.uuid)"><i class="fas fa-arrow-left"></i></button>
+        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="goForward(tab.uuid)"><i class="fas fa-arrow-right"></i></button>
+        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="reload(tab.uuid)"><i class="fas fa-sync-alt"></i></button>
       </span>
 
       <!-- clubbed search input and button -->
-      <span class="col-md-8">
-        <div class="input-group m-2">
-          <input type="text" class="form-control" [(ngModel)]="tab.searchQuery" (keyup.enter)="searchGoogle(tab.searchQuery, tab.uuid)"/>
+      <span class="col-10">
+        <div class="input-group input-group-sm m-2">
+          <input type="text" class="form-control form-control-sm " [(ngModel)]="tab.searchQuery" (keyup.enter)="searchGoogle(tab.searchQuery, tab.uuid)"/>
           <button class="btn btn-outline-primary clickable" (click)="searchGoogle(tab.searchQuery, tab.uuid)"><i class="fas fa-search"></i></button>
         </div>
       </span>
 
-      <span class="col-md-3">
+      <span class="col-1">
         <!-- setting fontawesome button -->
         
-        <button class="btn btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="openSettings(tab.uuid)">
+        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="openSettings(tab.uuid)">
           <i class="fa fa-cog clickable"></i>
         </button>
       </span>

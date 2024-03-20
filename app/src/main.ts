@@ -11,7 +11,7 @@ let windows = {};
 
 async function createWindow() {
     win = new BrowserWindow({
-        width: 1920, height: 1080, webPreferences: {
+        width: 1920, height: 1080, frame:false , webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
             webviewTag: true,
