@@ -1,5 +1,16 @@
+<div class="row m-0 p-0">
+  <div class="col-auto">
+    Record Scrape
+  </div>
+  <div class="col-auto float-end">
+    <!-- Window close, expand minimize btns with fontawesome free -->
+    <i class="fas fa-window-minimize clickable" (click)="minimizeApp()"></i>
+    <i class="fas fa-window-maximize clickable" (click)="maximizeApp()"></i>
+    <i class="fas fa-window-close clickable" (click)="closeApp()"></i>
+    
+  </div>
+</div>
 <div class="d-flex">
-  <span class="col-1">TT</span>
   <ul class="nav nav-tabs mt-1 col">
     <li *ngFor="let tab of tabs" class="nav-item" (click)="setActiveTab(tab.uuid)" >
       <span class="nav-link clickable" [ngClass]="{'active':tab.uuid == activeTabUUID}" aria-current="page">
@@ -15,33 +26,32 @@
       <a class="nav-link" aria-current="page">+</a>
     </li>
   </ul>
+  <span class="col-1" (click)="closeApp()">Close</span>
 </div>
 
 
 <div *ngFor="let tab of tabs" class="nav-item">
-    <span class="row" [hidden]="tab.uuid != activeTabUUID">
-      <span class="col-1">
-        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="goBack(tab.uuid)"><i class="fas fa-arrow-left"></i></button>
-        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="goForward(tab.uuid)"><i class="fas fa-arrow-right"></i></button>
-        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="reload(tab.uuid)"><i class="fas fa-sync-alt"></i></button>
+    <span class="row p-0 m-0" [hidden]="tab.uuid != activeTabUUID">
+      <span class="col-auto">
+        <i class="fas fa-arrow-left" (click)="goBack(tab.uuid)"></i>
+        <i class="fas fa-arrow-right" (click)="goForward(tab.uuid)"></i>
+        <i class="fas fa-sync-alt" (click)="reload(tab.uuid)"></i>
       </span>
 
       <!-- clubbed search input and button -->
-      <span class="col-10">
+      <span class="col">
         <div class="input-group input-group-sm m-2">
           <input type="text" class="form-control form-control-sm " [(ngModel)]="tab.searchQuery" (keyup.enter)="searchGoogle(tab.searchQuery, tab.uuid)"/>
           <button class="btn btn-outline-primary clickable" (click)="searchGoogle(tab.searchQuery, tab.uuid)"><i class="fas fa-search"></i></button>
         </div>
       </span>
 
-      <span class="col-1">
-        <!-- setting fontawesome button -->
-        
-        <button class="btn btn-sm btn-outline-primary p-1 px-2 m-2 mx-0 round clickable" style="margin-left: 2px !important;" (click)="openSettings(tab.uuid)">
+      <span class="col-auto">        
+        <button class="btn btn-sm btn-outline-dark p-1 px-2 m-2 mx-0 round clickable" (click)="openSetting()" style="margin-left: 2px !important;" (click)="openSettings(tab.uuid)">
           <i class="fa fa-cog clickable"></i>
         </button>
       </span>
     </span>
-    <webview #webview [hidden]="tab.uuid != activeTabUUID" [src]="tab.url" style="height: calc(100vh - 100px)"></webview>
+    <webview #webview [hidden]="tab.uuid != activeTabUUID" [src]="tab.url" style="height: calc(100vh - 102px)"></webview>
 </div>
 

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron';
 import * as isDev from 'electron-is-dev';
 import * as log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
@@ -10,12 +10,14 @@ let win: BrowserWindow;
 let windows = {};
 
 async function createWindow() {
+    nativeTheme.themeSource = 'light';
+
     win = new BrowserWindow({
         width: 1920, height: 1080, frame:false , webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
+            nodeIntegration: false,
+            contextIsolation: true,
             webviewTag: true,
-            devTools: true,
+            devTools: true
         }
     });
 
@@ -42,20 +44,6 @@ async function createWindow() {
     })
 }
 
-ipcMain.handle('create-window', (event, tabId) => {
-    let win = new BrowserWindow({ /* your options */ });
-    win.loadURL("https://www.google.com/");
-    windows[tabId] = win;
-    return win.webContents.id;
-});
-
-ipcMain.handle('close-window', (event, tabId) => {
-    if (windows[tabId]) {
-        windows[tabId].close();
-        delete windows[tabId];
-    }
-});
-
 app.on('ready', createWindow)
 
 app.on('activate', () => {
@@ -64,11 +52,7 @@ app.on('activate', () => {
     }
 })
 
-
-
 ipcMain.on('sync-message', MessageHelper.onMessage.bind(MessageHelper));
-
-
 
 // Auto Updater
 if (!isDev) {

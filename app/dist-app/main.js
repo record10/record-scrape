@@ -49,12 +49,13 @@ function createWindow() {
     return __awaiter(this, void 0, void 0, function () {
         var indexUrl;
         return __generator(this, function (_a) {
+            electron_1.nativeTheme.themeSource = 'light';
             win = new electron_1.BrowserWindow({
                 width: 1920, height: 1080, frame: false, webPreferences: {
-                    nodeIntegration: true,
-                    contextIsolation: false,
+                    nodeIntegration: false,
+                    contextIsolation: true,
                     webviewTag: true,
-                    devTools: true,
+                    devTools: true
                 }
             });
             indexUrl = url.format({
@@ -80,18 +81,6 @@ function createWindow() {
         });
     });
 }
-electron_1.ipcMain.handle('create-window', function (event, tabId) {
-    var win = new electron_1.BrowserWindow({ /* your options */});
-    win.loadURL("https://www.google.com/");
-    windows[tabId] = win;
-    return win.webContents.id;
-});
-electron_1.ipcMain.handle('close-window', function (event, tabId) {
-    if (windows[tabId]) {
-        windows[tabId].close();
-        delete windows[tabId];
-    }
-});
 electron_1.app.on('ready', createWindow);
 electron_1.app.on('activate', function () {
     if (win === null) {

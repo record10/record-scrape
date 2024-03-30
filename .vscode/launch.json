@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Flutter",
+            "name": "Node",
             "type": "node",
             "request": "launch",
-            "cwd": "${workspaceFolder}/app",
+            "cwd": "${workspaceFolder}/app/",
             "runtimeExecutable": "${workspaceFolder}/app/node_modules/.bin/electron",
             "args" : ["."],
             "outputCapture": "std"

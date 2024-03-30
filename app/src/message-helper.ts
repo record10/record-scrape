@@ -34,4 +34,15 @@ export class MessageHelper {
         return nativeTheme.shouldUseDarkColors;
     }
 
+    static async closeApp(data:any){
+        app.quit();
+    }
+
+    static async minimizeApp(data:any){
+        app.hide();
+    }
+
+    static async maximizeApp(data:any){
+        app.show();
+    }
 }

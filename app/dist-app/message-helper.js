@@ -93,6 +93,37 @@ var MessageHelper = /** @class */ (function () {
             });
         });
     };
+    MessageHelper.isNightMode = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, electron_1.nativeTheme.shouldUseDarkColors];
+            });
+        });
+    };
+    MessageHelper.closeApp = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                electron_1.app.quit();
+                return [2 /*return*/];
+            });
+        });
+    };
+    MessageHelper.minimizeApp = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                electron_1.app.hide();
+                return [2 /*return*/];
+            });
+        });
+    };
+    MessageHelper.maximizeApp = function (data) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                electron_1.app.show();
+                return [2 /*return*/];
+            });
+        });
+    };
     return MessageHelper;
 }());
 exports.MessageHelper = MessageHelper;

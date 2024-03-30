@@ -5,7 +5,8 @@
   "main": "dist-app/main.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "tsc && electron .",
+    "watch": "tsc-watch",
+    "start": "tsc-watch --onSuccess \"electron .\"",
     "build-w": "tsc && electron-builder build -w --publish never"
   },
   "repository": {
@@ -21,7 +22,9 @@
   "homepage": "https://github.com/record10/record-scrape#readme",
   "devDependencies": {
     "@types/electron": "^1.6.10",
-    "electron": "^29.1.4"
+    "electron": "^29.1.4",
+    "tsc-watch": "^6.1.0",
+    "typescript": "^5.4.3"
   },
   "dependencies": {
     "electron-is-dev": "^1.2.0",

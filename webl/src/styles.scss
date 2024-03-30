@@ -1,0 +1,44 @@
+//    BS Costomizations --------------------------------------------------
+$primary: #29abe2;
+$success: #38b34a;
+$info: #ec2b7b;
+$warning: #ffc627;
+$secondary: #414142;
+$light: #eceff1;
+
+@import "bootstrap/scss/bootstrap.scss";
+// @import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+// CSS Variables
+:root {
+    --prime: rgb(0, 122, 204);
+    --sec: #f8f9fa;
+    --border: #d2d2e7;
+    --prime-light: #a4dcf1;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.br-0 {
+    border-radius: 0 !important;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.1rem rgba(41, 171, 226, 0.25) !important;
+}

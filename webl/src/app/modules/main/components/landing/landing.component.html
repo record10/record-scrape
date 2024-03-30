@@ -1,0 +1,68 @@
+<div class="row p-0 m-0 mb-1 titlebar bg-dark">
+    <div class="col bg-dark text-light">
+        Record Scraper
+    </div>
+    <div class="col-auto bg-light">
+        <span class="mx-2" (click)="minimizeApp()">
+            <i class="fa-solid fa-window-minimize"></i>
+        </span>
+        <span class="mx-2" (click)="maximizeApp()">
+            <i class="fa-solid fa-compress"></i>
+        </span>
+        <span class="mx-2" (click)="closeApp()">
+            <i class="fa-solid fa-xmark"></i>
+        </span>
+    </div>
+</div>
+<div class="d-flex">
+    <ul class="nav nav-tabs mt-1 col" style="max-height: 26px;">
+        <li *ngFor="let tab of tabs" class="nav-item" (click)="setActiveTab(tab.uuid)">
+            <span class="nav-link clickable p-2 py-0 br-0 clickable" [ngClass]="{'active':tab.uuid == activeTabUUID}" aria-current="page">
+                {{tab.name}}
+                <!-- - {{tab.uuid}}, {{activeTabUUID}} -->
+                <span class="ms-2" (click)="closeTab(tab.uuid)">
+                    <i class="fas fa-times"></i>
+                </span>
+            </span>
+
+        </li>
+        <li (click)="addNewTab()">
+            <a class="nav-link p-1 px-2 py-0 br-0 clickable" aria-current="page">+</a>
+        </li>
+    </ul>
+</div>
+
+
+<div *ngFor="let tab of tabs" class="nav-item mt-2">
+    <div class="row p-0 m-0" [hidden]="tab.uuid != activeTabUUID">
+        <div class="col-auto mt-1">
+            <span class="me-2" (click)="goBack(tab.uuid)">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="mx-2" (click)="goForward(tab.uuid)">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="ms-2" (click)="reload(tab.uuid)">
+                <i class="fas fa-sync-alt"></i>
+            </span>
+        </div>
+
+        <!-- clubbed search input and button -->
+        <div class="col">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control form-control-sm border-radius-0" [(ngModel)]="tab.searchQuery"
+                    (keyup.enter)="searchGoogle(tab.searchQuery, tab.uuid)" />
+                <button class="btn btn-outline-primary clickable" (click)="searchGoogle(tab.searchQuery, tab.uuid)"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="col-auto">
+            <button class="btn btn-sm btn-outline-dark p-1 px-2 mx-0 round clickable" (click)="openSetting()"
+                style="margin-left: 2px !important;" (click)="openSettings(tab.uuid)">
+                <i class="fa fa-cog clickable"></i>
+            </button>
+        </div>
+    </div>
+    <webview #webview [hidden]="tab.uuid != activeTabUUID" [src]="tab.url" [css]="':root { color-scheme: light; }'" style="height: calc(100vh - 102px)">    </webview>
+</div>

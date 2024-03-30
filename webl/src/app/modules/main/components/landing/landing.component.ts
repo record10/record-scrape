@@ -1,21 +1,14 @@
-import { CommonModule } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA, Component, ElementRef, NO_ERRORS_SCHEMA, QueryList, ViewChildren } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { RouterOutlet } from '@angular/router';
-import { SettingComponent } from './components/setting/setting.component';
-import { Tab, TabService } from './services/tab-manager.service';
+import { AfterViewInit, Component, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Tab, TabService } from '../../services/tab-manager.service';
+import { SettingComponent } from '../setting/setting.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
-  imports: [CommonModule, RouterOutlet, FormsModule, MatDialogModule],
-  providers: [TabService],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  selector: 'app-landing',
+  templateUrl: './landing.component.html',
+  styleUrl: './landing.component.scss'
 })
-export class AppComponent {
+export class LandingComponent implements AfterViewInit {
   title = 'web';
   tabs: Tab[] = [];
   @ViewChildren('webview') webviews!: QueryList<ElementRef>;
@@ -25,15 +18,44 @@ export class AppComponent {
  
 
   constructor(private tabService: TabService, public dialog: MatDialog) {
-    this.tabService.tabs$.subscribe(tabs => {
+    this.tabService.tabObs.subscribe(tabs => {
       this.tabs = tabs;
     });
 
-    this.tabService.activeTabHistory$.subscribe(history => {
+    this.tabService.activeTabHistoryObs.subscribe(history => {
       this.activeTabHistory = history;
     });
     this.addNewTab();
   }
+
+
+  ngAfterViewInit() {
+    // Loop over the webviews
+    this.webviews.forEach((webview, index) => {
+      // Get the corresponding tab
+      const tab = this.tabs[index];
+
+      // Add listeners to the webview
+      webview.nativeElement.addEventListener('dom-ready', () => {
+        // if activeUUID is same as tab.uuid then set tab.searchQuery to url
+        
+        // console.log(`DOM is ready for tab ${tab.uuid}`);
+      });
+
+      webview.nativeElement.addEventListener('did-navigate', (e:any) => {
+        if(this.activeTabUUID == tab.uuid){
+          tab.searchQuery = (webview.nativeElement as any).getURL();
+        } 
+        // console.log(`Did navigate to ${e.url} for tab ${tab.uuid}`);
+      });
+
+      // Add more listeners as needed...
+    });
+  }
+
+  closeApp = this.tabService.closeApp;
+  minimizeApp = this.tabService.minimizeApp;
+  maximizeApp = this.tabService.maximizeApp;
 
   async addNewTab() {
     this.activeTabUUID = this.tabService.addNewTab();
@@ -41,7 +63,7 @@ export class AppComponent {
   }
 
   closeTab(uuid: string) {
-    this.tabService.closeTab(uuid);
+    this.activeTabUUID = this.tabService.closeTab(uuid);
   }
 
   setActiveTab(uuid: string) {
@@ -85,6 +107,14 @@ export class AppComponent {
     let tabIndex = this.tabs.findIndex(tab => tab.uuid == uuid);
     let webview = this.webviews.toArray()[tabIndex];
     if (webview) {
+
+      // check if searchQuery is not of url pattern
+      let isUrl = searchQuery.match(/^(http|https):\/\/[^ "]+$/);
+      if(isUrl){
+        (webview.nativeElement as any).loadURL(searchQuery);
+        return;
+      }
+      // replace spaces with + for google search
       let googleFriendlyQuery = searchQuery.split(" ").join("+");
       (webview.nativeElement as any).loadURL(`https://www.google.com/search?q=${googleFriendlyQuery}`);
     }
@@ -99,10 +129,6 @@ export class AppComponent {
       console.log(res);
     }
   }
-
-  closeApp = this.tabService.closeApp;
-  minimizeApp = this.tabService.minimizeApp;
-  maximizeApp = this.tabService.maximizeApp;
 
   openSetting(){
     this.dialog.open(SettingComponent, {
@@ -135,8 +161,9 @@ export function script(){
   //  if we are on linkedin profile page
   if(window.location.href.includes("linkedin.com/in/")){
     result = {
-      name: getInnerHtml('//*[@id="ember40"]/h1'),
+      name: getInnerHtml("//h1[contains(@class, 'text-heading-xlarge') and contains(@class, 'inline') and contains(@class, 't-24') and contains(@class, 'v-align-middle') and contains(@class, 'break-words')]"),
     }
   }
   return result;
 }
+
