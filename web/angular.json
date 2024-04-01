@@ -3,11 +3,12 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "web": {
+    "webl": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "standalone": false
         }
       },
       "root": "",
@@ -17,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/web",
+            "outputPath": "dist/webl",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -26,11 +27,13 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/purple-green.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -63,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "web:build:production"
+              "buildTarget": "webl:build:production"
             },
             "development": {
-              "buildTarget": "web:build:development"
+              "buildTarget": "webl:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "web:build"
+            "buildTarget": "webl:build"
           }
         },
         "test": {
@@ -87,11 +90,13 @@
             "tsConfig": "tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
-              "src/assets"
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/purple-green.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -99,8 +104,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
