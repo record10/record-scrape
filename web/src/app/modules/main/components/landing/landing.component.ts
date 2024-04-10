@@ -48,10 +48,18 @@ export class LandingComponent implements AfterViewInit {
       });
     });
   }
+  
+  closeApp(){
+    this.tabService.closeApp();
+  }
 
-  closeApp = this.tabService.closeApp;
-  minimizeApp = this.tabService.minimizeApp;
-  maximizeApp = this.tabService.maximizeApp;
+  minimizeApp(){
+    this.tabService.minimizeApp();
+  }
+
+  maximizeApp(){
+    this.tabService.maximizeApp();
+  }
 
   async addNewTab() {
     this.activeTabUUID = this.tabService.addNewTab();
