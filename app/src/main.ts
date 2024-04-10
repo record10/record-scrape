@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as url from 'url';
 import { MessageHelper } from './message-helper';
 
-let win: BrowserWindow;
+export let win: BrowserWindow;
 let windows = {};
 
 async function createWindow() {
