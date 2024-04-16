@@ -92,7 +92,6 @@ if (!isDev) {
     setInterval(() => { autoUpdater.checkForUpdates() }, 2000 * 30);
 }
 
-
 ipcMain.on('installUpdate', async (event, arg) => {
     log.info("installUpdate")
     event.returnValue = true;

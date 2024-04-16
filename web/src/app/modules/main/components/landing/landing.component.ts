@@ -40,7 +40,7 @@ export class LandingComponent implements AfterViewInit {
           console.log(`DOM is ready for tab ${tab.uuid}`);
         });
   
-        webview.nativeElement.addEventListener('did-navigate', (e) => {
+        webview.nativeElement.addEventListener('did-navigate', (e:any) => {
           console.log(`Did navigate to ${e.url} for tab ${tab.uuid}`);
         });
   
