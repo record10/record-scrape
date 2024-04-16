@@ -1,6 +1,7 @@
 import { app, nativeTheme } from 'electron';
 import * as log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
+import { win } from 'main';
 
 export class MessageHelper {
 
@@ -44,5 +45,19 @@ export class MessageHelper {
 
     static async maximizeApp(data:any){
         app.show();
+        // set app to full screen size electron
+        const mainWindow = win;
+        if (mainWindow) {
+            mainWindow.maximize();
+        }
+    }
+
+    static async resize(data:any){
+        app.show();
+        // get previous size electron
+        const mainWindow = win;
+        if (mainWindow) {
+            mainWindow.restore();
+        }
     }
 }
