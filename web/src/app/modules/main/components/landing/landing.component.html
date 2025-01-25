@@ -1,4 +1,4 @@
-<div class="row p-0 m-0 mb-2 titlebar bg-dark">
+<!-- <div class="row p-0 m-0 mb-2 titlebar bg-dark">
     <div class="col bg-dark text-light">
         Record Scraper
     </div>
@@ -48,7 +48,6 @@
             </span>
         </div>
 
-        <!-- clubbed search input and button -->
         <div class="col">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control form-control-sm border-radius-0" [(ngModel)]="tab.searchQuery"
@@ -66,4 +65,23 @@
         </div>
     </div>
     <webview #webview [hidden]="tab.uuid != activeTabUUID" [src]="tab.url" [css]="':root { color-scheme: light; }'" style="height: calc(100vh - 102px)">    </webview>
+</div> -->
+
+<div class="container mt-5">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#profile">Profile</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#messages">Messages</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="home">...Home...</div>
+        <div class="tab-pane" id="profile">...Profile...</div>
+        <div class="tab-pane" id="messages">...Messages...</div>
+    </div>
 </div>
